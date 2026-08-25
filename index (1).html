@@ -1,0 +1,643 @@
+```
+<!DOCTYPE html>
+
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>เรียนเคมี — ม.4-6 เพิ่มเติม</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+
+  :root{
+
+    --navy:#0F1B2D;
+
+    --navy-soft:#16273D;
+
+    --paper:#F5F0E3;
+
+    --paper-dim:#EDE6D3;
+
+    --ink:#141F2E;
+
+    --flame:#E85C33;   /* เล่ม 1 */
+
+    --teal:#1E7F79;    /* เล่ม 2 */
+
+    --amber:#E8A93B;   /* เล่ม 3 */
+
+    --plum:#7C5A96;    /* เล่ม 4 */
+
+    --sage:#7C8C4E;    /* เล่ม 5 */
+
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation:none !important; transition:none !important;} }
+
+  body{
+
+    margin:0;
+
+    background:var(--paper);
+
+    color:var(--ink);
+
+    font-family:'Sarabun',sans-serif;
+
+    line-height:1.7;
+
+  }
+
+  h1,h2,h3,.display{font-family:'Bai Jamjuree',sans-serif;}
+
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  a{color:inherit;}
+
+  :focus-visible{outline:3px solid var(--flame); outline-offset:3px;}
+
+  /* ---------- NAV ---------- */
+
+  nav{
+
+    position:sticky; top:0; z-index:50;
+
+    background:rgba(15,27,45,0.92);
+
+    backdrop-filter:blur(6px);
+
+    display:flex; align-items:center; justify-content:space-between;
+
+    padding:14px clamp(20px,5vw,64px);
+
+    color:var(--paper);
+
+  }
+
+  nav .brand{font-family:'Bai Jamjuree'; font-weight:700; font-size:1.05rem; letter-spacing:.01em;}
+
+  nav .links{display:flex; gap:clamp(14px,3vw,28px); font-size:.92rem;}
+
+  nav .links a{text-decoration:none; opacity:.85; padding:4px 2px; border-bottom:2px solid transparent;}
+
+  nav .links a:hover{opacity:1; border-color:var(--flame);}
+
+  /* ---------- HERO ---------- */
+
+  header.hero{
+
+    background:
+
+      radial-gradient(ellipse at 82% -10%, rgba(232,92,51,0.25), transparent 55%),
+
+      radial-gradient(ellipse at -5% 110%, rgba(30,127,121,0.28), transparent 55%),
+
+      var(--navy);
+
+    color:var(--paper);
+
+    padding:clamp(64px,10vw,110px) clamp(20px,6vw,64px) clamp(56px,8vw,90px);
+
+    position:relative;
+
+    overflow:hidden;
+
+  }
+
+  .hero-grid{
+
+    display:grid; grid-template-columns:1.3fr .7fr; gap:40px; align-items:center;
+
+    max-width:1180px; margin:0 auto;
+
+  }
+
+  @media (max-width:820px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .eyebrow{
+
+    display:inline-flex; align-items:center; gap:8px;
+
+    font-family:'IBM Plex Mono'; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
+
+    color:var(--amber); margin-bottom:18px;
+
+  }
+
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--amber);}
+
+  header.hero h1{
+
+    font-size:clamp(2.6rem,6vw,4.4rem);
+
+    font-weight:700; line-height:1.05; margin:0 0 18px;
+
+  }
+
+  header.hero p.lead{
+
+    font-size:clamp(1.02rem,1.6vw,1.2rem); max-width:46ch; color:#D9D2C1; margin:0 0 30px;
+
+  }
+
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:14px;}
+
+  .btn{
+
+    display:inline-flex; align-items:center; gap:10px;
+
+    padding:13px 24px; border-radius:2px; text-decoration:none;
+
+    font-weight:600; font-size:.95rem; border:1px solid transparent; transition:transform .15s ease, background .2s ease;
+
+  }
+
+  .btn-primary{background:var(--flame); color:#fff;}
+
+  .btn-primary:hover{transform:translateY(-2px); background:#D14F28;}
+
+  .btn-ghost{border-color:rgba(245,240,227,0.35); color:var(--paper);}
+
+  .btn-ghost:hover{border-color:var(--paper); transform:translateY(-2px);}
+
+  /* flask motif */
+
+  .flask-wrap{display:flex; justify-content:center;}
+
+  .flask-wrap svg{width:100%; max-width:230px; height:auto;}
+
+  /* ---------- SECTION SHELL ---------- */
+
+  section{padding:clamp(52px,8vw,88px) clamp(20px,6vw,64px);}
+
+  .section-inner{max-width:1180px; margin:0 auto;}
+
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:36px; flex-wrap:wrap;}
+
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem); margin:0; font-weight:700;}
+
+  .section-head .tag{font-family:'IBM Plex Mono'; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:#8a8265;}
+
+  .section-note{max-width:60ch; color:#4b4536; font-size:.96rem; margin-top:8px;}
+
+  /* ---------- PERIODIC CHAPTER GRID ---------- */
+
+  .legend{display:flex; flex-wrap:wrap; gap:10px 22px; margin-bottom:28px;}
+
+  .legend span{display:inline-flex; align-items:center; gap:8px; font-size:.82rem; font-family:'IBM Plex Mono'; color:#4b4536;}
+
+  .legend i{width:10px; height:10px; display:inline-block; border-radius:1px;}
+
+  .periodic{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+
+    gap:12px;
+
+  }
+
+  .tile{
+
+    background:#FBF8EF;
+
+    border:1px solid #DED4B4;
+
+    border-top:4px solid var(--vol-color, var(--flame));
+
+    padding:14px 14px 16px;
+
+    min-height:132px;
+
+    display:flex; flex-direction:column; justify-content:space-between;
+
+    transition:transform .15s ease, box-shadow .15s ease;
+
+  }
+
+  .tile:hover{transform:translateY(-4px); box-shadow:0 10px 24px -12px rgba(15,27,45,0.35);}
+
+  .tile .num{font-family:'IBM Plex Mono'; font-weight:600; font-size:.95rem; color:var(--vol-color, var(--flame));}
+
+  .tile .title{font-weight:600; font-size:.94rem; margin-top:10px; color:var(--ink);}
+
+  .tile .vol{font-family:'IBM Plex Mono'; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:#8a8265; margin-top:10px;}
+
+
+  /* ---------- EXERCISE LIBRARY ---------- */
+  .exercise-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:18px;
+  }
+  .exercise-card{
+    background:#FBF8EF;
+    border:1px solid #DED4B4;
+    border-top:4px solid var(--vol-color,var(--flame));
+    padding:18px;
+    min-height:175px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .exercise-card .chapter{
+    font-family:'IBM Plex Mono';
+    font-size:.75rem;
+    color:var(--vol-color,var(--flame));
+    letter-spacing:.06em;
+  }
+  .exercise-card h3{
+    margin:8px 0 6px;
+    font-size:1.05rem;
+  }
+  .exercise-card p{
+    margin:0 0 14px;
+    color:#5d5749;
+    font-size:.9rem;
+  }
+  .exercise-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .mini-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:9px 14px;
+    border:1px solid #C9BE9C;
+    text-decoration:none;
+    font-size:.84rem;
+    font-weight:600;
+    background:#F5F0E3;
+  }
+  .mini-btn.primary{
+    background:var(--navy);
+    color:var(--paper);
+    border-color:var(--navy);
+  }
+
+  /* ---------- VIDEO LIBRARY ---------- */
+  .video-library{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+  }
+
+  /* ---------- VIDEO GRID ---------- */
+
+  .video-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:22px;}
+
+  .video-card{background:var(--navy-soft); padding:10px; }
+
+  .video-frame{position:relative; width:100%; padding-top:56.25%; background:#000;}
+
+  .video-frame iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+
+  .video-card .video-label{color:#B9C2CC; font-family:'IBM Plex Mono'; font-size:.72rem; padding:10px 4px 2px; letter-spacing:.06em;}
+
+  /* ---------- CALENDAR ---------- */
+
+  .calendar-card{border:1px solid #DED4B4; background:#FBF8EF; padding:16px;}
+
+  .calendar-card iframe{width:100%; height:460px; border:0;}
+
+  /* ---------- FOOTER ---------- */
+
+  footer{
+
+    background:var(--navy); color:#9AA5B1;
+
+    padding:34px clamp(20px,6vw,64px); font-size:.85rem;
+
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+
+  }
+
+  footer strong{color:var(--paper);}
+
+
+  /* ---------- PDF LIBRARY ---------- */
+  .pdf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+  .pdf-card{background:#FBF8EF;border:1px solid #DED4B4;border-top:4px solid var(--vol-color,var(--flame));padding:18px;display:flex;flex-direction:column;justify-content:space-between;min-height:190px;}
+  .pdf-card .pdf-meta{font-family:'IBM Plex Mono';font-size:.72rem;color:var(--vol-color,var(--flame));letter-spacing:.06em;}
+  .pdf-card h3{margin:8px 0 6px;font-size:1.03rem;}
+  .pdf-card p{margin:0 0 14px;color:#5d5749;font-size:.88rem;}
+  .pdf-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .pdf-btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;border:1px solid #C9BE9C;text-decoration:none;font-size:.84rem;font-weight:600;background:#F5F0E3;}
+  .pdf-btn.primary{background:var(--navy);color:var(--paper);border-color:var(--navy);}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="brand">เรียนเคมี</div>
+
+<div class="links">
+
+<a href="#chapters">บทเรียน</a>
+
+<a href="#pdfs">PDF</a>
+<a href="#videos">วิดีโอ</a>
+
+<a href="#calendar">ปฏิทิน</a>
+
+</div>
+
+</nav>
+
+<header class="hero">
+
+<div class="hero-grid">
+
+<div>
+
+<div class="eyebrow">เคมีเพิ่มเติม · ม.4–6</div>
+
+<h1>เรียนเคมี<br>ทีละบท ทีละปฏิกิริยา</h1>
+
+<p class="lead">แบบฝึกหัดท้ายบทครบ 13 บท จัดเป็น 5 เล่ม พร้อมคลิปวิดีโอประกอบการเรียน รวบรวมไว้ในที่เดียว สำหรับทบทวนและฝึกทำโจทย์ด้วยตนเอง</p>
+</div>
+
+<div class="flask-wrap">
+
+<svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+<path d="M78 20H122" stroke="#E8A93B" stroke-width="4" stroke-linecap="round"/>
+
+<path d="M84 20V70L36 176C31 187 39 200 51 200H149C161 200 169 187 164 176L116 70V20" stroke="#F5F0E3" stroke-width="4" stroke-linejoin="round"/>
+
+<path d="M52 150H148" stroke="#E85C33" stroke-width="4"/>
+
+<circle cx="70" cy="172" r="4" fill="#1E7F79"/>
+
+<circle cx="95" cy="182" r="3" fill="#E8A93B"/>
+
+<circle cx="118" cy="170" r="5" fill="#7C5A96"/>
+
+<circle cx="132" cy="185" r="3" fill="#7C8C4E"/>
+
+</svg>
+
+</div>
+
+</div>
+
+</header>
+
+<section id="chapters">
+
+<div class="section-inner">
+
+<div class="section-head">
+
+<div>
+
+<h2>บทเรียนทั้ง 13 บท</h2>
+
+<p class="section-note">จัดวางแบบตารางธาตุ — แต่ละช่องคือหนึ่งบท สีขอบบนบอกว่าอยู่เล่มไหน</p>
+
+</div>
+
+<div class="tag">แบบฝึกหัดท้ายบท</div>
+
+</div>
+
+<div class="legend">
+
+<span><i style="background:var(--flame)"></i> เล่ม 1</span>
+
+<span><i style="background:var(--teal)"></i> เล่ม 2</span>
+
+<span><i style="background:var(--amber)"></i> เล่ม 3</span>
+
+<span><i style="background:var(--plum)"></i> เล่ม 4</span>
+
+<span><i style="background:var(--sage)"></i> เล่ม 5</span>
+
+</div>
+
+<div class="periodic">
+
+<a class="tile" href="#exercise-01"  style="text-decoration:none; --vol-color:var(--flame)"><span class="num">01</span><span class="title">ความปลอดภัยและปฏิบัติการเคมี</span><span class="vol">เล่ม 1</span></a>
+
+<a class="tile" href="#exercise-02"  style="text-decoration:none; --vol-color:var(--flame)"><span class="num">02</span><span class="title">อะตอมและสมบัติของธาตุ</span><span class="vol">เล่ม 1</span></a>
+
+<a class="tile" href="#exercise-03"  style="text-decoration:none; --vol-color:var(--flame)"><span class="num">03</span><span class="title">พันธะเคมี</span><span class="vol">เล่ม 1</span></a>
+
+<a class="tile" href="#exercise-04"  style="text-decoration:none; --vol-color:var(--teal)"><span class="num">04</span><span class="title">โมลและสูตรเคมี</span><span class="vol">เล่ม 2</span></a>
+
+<a class="tile" href="#exercise-05"  style="text-decoration:none; --vol-color:var(--teal)"><span class="num">05</span><span class="title">สารละลาย</span><span class="vol">เล่ม 2</span></a>
+
+<a class="tile" href="#exercise-06"  style="text-decoration:none; --vol-color:var(--teal)"><span class="num">06</span><span class="title">ปริมาณสัมพันธ์</span><span class="vol">เล่ม 2</span></a>
+
+<a class="tile" href="#exercise-07"  style="text-decoration:none; --vol-color:var(--amber)"><span class="num">07</span><span class="title">แก๊สและสมบัติของแก๊ส</span><span class="vol">เล่ม 3</span></a>
+
+<a class="tile" href="#exercise-08"  style="text-decoration:none; --vol-color:var(--amber)"><span class="num">08</span><span class="title">อัตราการเกิดปฏิกิริยาเคมี</span><span class="vol">เล่ม 3</span></a>
+
+<a class="tile" href="#exercise-09"  style="text-decoration:none; --vol-color:var(--amber)"><span class="num">09</span><span class="title">สมดุลเคมี</span><span class="vol">เล่ม 3</span></a>
+
+<a class="tile" href="#exercise-10"  style="text-decoration:none; --vol-color:var(--plum)"><span class="num">10</span><span class="title">กรด–เบส</span><span class="vol">เล่ม 4</span></a>
+
+<a class="tile" href="#exercise-11"  style="text-decoration:none; --vol-color:var(--plum)"><span class="num">11</span><span class="title">เคมีไฟฟ้า</span><span class="vol">เล่ม 4</span></a>
+
+<a class="tile" href="#exercise-12"  style="text-decoration:none; --vol-color:var(--sage)"><span class="num">12</span><span class="title">เคมีอินทรีย์</span><span class="vol">เล่ม 5</span></a>
+
+<a class="tile" href="#exercise-13"  style="text-decoration:none; --vol-color:var(--sage)"><span class="num">13</span><span class="title">พอลิเมอร์</span><span class="vol">เล่ม 5</span></a>
+
+</div>
+</div>
+
+</section>
+
+
+<section id="pdfs" style="background:var(--paper-dim);">
+<div class="section-inner">
+<div class="section-head">
+<div>
+<h2>เอกสาร PDF ประกอบการเรียน</h2>
+<p class="section-note">ไฟล์ PDF ที่แนบมากับเว็บไซต์นี้ สามารถเปิดอ่านในเบราว์เซอร์ได้โดยตรง หรือดาวน์โหลดไปเก็บไว้ได้</p>
+</div>
+<div class="tag">13 ไฟล์</div>
+</div>
+<div class="pdf-grid">
+<article class="pdf-card" style="--vol-color:var(--flame)">
+<div><div class="pdf-meta">PDF 01 · ม.4</div><h3>โครงสร้างอะตอม</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="01-structure-atom-m4.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="01-structure-atom-m4.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--flame)">
+<div><div class="pdf-meta">PDF 02 · ม.4</div><h3>ธาตุและตารางธาตุ</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="02-periodic-table-m4.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="02-periodic-table-m4.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--flame)">
+<div><div class="pdf-meta">PDF 03 · ม.4</div><h3>พันธะเคมี</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="03-chemical-bond-m4.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="03-chemical-bond-m4.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--teal)">
+<div><div class="pdf-meta">PDF 04 · ม.5</div><h3>โมลและสูตรเคมี</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="04-mole-formula-m5.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="04-mole-formula-m5.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--teal)">
+<div><div class="pdf-meta">PDF 05 · ม.4</div><h3>สารละลาย</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="05-solution-m4.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="05-solution-m4.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--teal)">
+<div><div class="pdf-meta">PDF 06 · ม.4</div><h3>ปริมาณสารสัมพันธ์</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="06-stoichiometry-m4.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="06-stoichiometry-m4.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--amber)">
+<div><div class="pdf-meta">PDF 07 · ม.5</div><h3>แก๊สและสมบัติของแก๊ส</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="07-gas-m5.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="07-gas-m5.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--amber)">
+<div><div class="pdf-meta">PDF 08 · ม.5</div><h3>อัตราการเกิดปฏิกิริยาเคมี</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="08-reaction-rate-m5.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="08-reaction-rate-m5.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--amber)">
+<div><div class="pdf-meta">PDF 09 · ม.5</div><h3>สมดุลเคมี</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="09-equilibrium-m5.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="09-equilibrium-m5.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--plum)">
+<div><div class="pdf-meta">PDF 10 · ม.5</div><h3>กรด–เบส</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="10-acid-base-m5.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="10-acid-base-m5.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--plum)">
+<div><div class="pdf-meta">PDF 11 · ม.5</div><h3>ไฟฟ้าเคมี</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="11-electrochem-m5.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="11-electrochem-m5.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--sage)">
+<div><div class="pdf-meta">PDF 12 · ม.6</div><h3>เคมีอินทรีย์</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="12-organic-m6.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="12-organic-m6.pdf" download>ดาวน์โหลด</a></div>
+</article>
+<article class="pdf-card" style="--vol-color:var(--sage)">
+<div><div class="pdf-meta">PDF 13 · ม.6</div><h3>พอลิเมอร์</h3><p>เอกสารประกอบการเรียนเคมี</p></div>
+<div class="pdf-actions"><a class="pdf-btn primary" href="13-polymer-m6.pdf" target="_blank" rel="noopener">เปิด PDF</a><a class="pdf-btn" href="13-polymer-m6.pdf" download>ดาวน์โหลด</a></div>
+</article>
+</div>
+</div>
+</section>
+
+<section id="videos" style="background:var(--navy);">
+
+<div class="section-inner">
+
+<div class="section-head">
+
+<div>
+
+<h2 style="color:var(--paper);">คลิปวิดีโอประกอบการเรียน</h2>
+
+<p class="section-note" style="color:#9AA5B1;">รวมคลิปจากเว็บไซต์เดิม ดูซ้ำได้ทุกเมื่อที่ต้องการทบทวน</p>
+
+</div>
+
+</div>
+
+<div class="video-grid">
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/wOoA2W2gCgs" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 1"></iframe></div><div class="video-label">บท 01 · ความปลอดภัยและปฏิบัติการเคมี</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/igrp4AJZJTQ" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 2"></iframe></div><div class="video-label">บท 02 · อะตอมและสมบัติของธาตุ</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/-4r8CA2ufCA" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 3"></iframe></div><div class="video-label">บท 03 · พันธะเคมี</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/KbTeQNGw4x0" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 4"></iframe></div><div class="video-label">บท 04 · โมลและสูตรเคมี</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/0Nu9M9Jdq_I" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 5"></iframe></div><div class="video-label">บท 05 · สารละลาย</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/C492zRTQ9rc" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 6"></iframe></div><div class="video-label">บท 06 · ปริมาณสัมพันธ์</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/trAtnLRXL_k" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 7"></iframe></div><div class="video-label">บท 07 · แก๊สและสมบัติของแก๊ส</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/3vVo40c7pIY" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 8"></iframe></div><div class="video-label">บท 08 · อัตราการเกิดปฏิกิริยาเคมี</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/Z2poIvdm8d0" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 9"></iframe></div><div class="video-label">บท 09 · สมดุลเคมี</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/8meT89jkAcQ" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 10"></iframe></div><div class="video-label">บท 10 · กรด–เบส</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/hAjsEOn8Ins" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 11"></iframe></div><div class="video-label">บท 11 · เคมีไฟฟ้า</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/HBJ664ryYeU" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 12"></iframe></div><div class="video-label">บท 12 · เคมีอินทรีย์</div></div>
+
+<div class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/RxkRlWrROwY" loading="lazy" allowfullscreen title="คลิปการสอนเคมี 13"></iframe></div><div class="video-label">บท 13 · พอลิเมอร์</div></div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="calendar">
+
+<div class="section-inner">
+
+<div class="section-head">
+
+<div>
+
+<h2>ปฏิทินการเรียน</h2>
+
+<p class="section-note">ตารางสอนและกำหนดส่งงาน อัปเดตอัตโนมัติจาก Google Calendar</p>
+
+</div>
+
+</div>
+
+<div class="calendar-card">
+
+<iframe src="https://www.google.com/calendar/embed?color=%239fe1e7&amp;src=36009@sksc.ac.th" loading="lazy" title="ปฏิทินการเรียนเคมี"></iframe>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div>จัดทำโดย <strong>นายปัณณทัต สาดวง</strong> · นักเรียนชั้นมัธยมศึกษาปีที่ 6/2 โรงเรียนสมุทรสาครวิทยาลัย</div>
+
+<div>ออกแบบใหม่จากเว็บไซต์เดิม</div>
+
+</footer>
+
+
+<script>
+(function () {
+  const frame = document.getElementById('pdfFrame');
+  if (!viewer || !frame) return;
+
+  document.querySelectorAll('.pdf-btn.primary').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      // Keep normal navigation reliable; open the PDF in a new tab as requested by target="_blank".
+      // The in-page viewer is available when the link is opened without a new tab.
+      frame.src = link.getAttribute('href');
+      viewer.classList.add('active');
+    });
+  });
+})();
+</script>
+
+</body>
+
+</html>
